@@ -1,42 +1,43 @@
+# Birthday Email Generator
 
-**Birthday Email Generator**
+This project builds a polished HTML birthday email from a plain-text template and sends it with SMTP. The result is shown below: the file `image.png` is the rendered output image from the project.
 
-- **Description:**: A small Python project that builds a polished HTML birthday email from a plain-text template and (optionally) sends it via SMTP. The repository generates the card-style email shown in the screenshot (`image.png`) — a gradient header with emojis, a large personalized title (e.g. "Happy Birthday, Teejay!"), and a clean, readable body with paragraph spacing and a footer.
+## Output
 
-**Preview:**
-- **Screenshot:**: See [image.png](image.png) for a sample output captured in an email client.
+The image below is the actual project output.
 
-**What It Does**
-- **Template:**: Reads `Data/Birthday_Wish_Template.txt` and replaces placeholders like `{name}` and `[Your Name]` with actual values.
-- **HTML Builder:**: `build_html.build_birthday_email()` wraps the personalized text into a responsive, card-style HTML email with a banner, body paragraphs, decorative divider, and footer.
-- **Sender:**: `send.send_birthday_email()` sends the HTML email via SMTP (defaults to Gmail SMTP settings).
+![Generated birthday email output](image.png)
 
-**Quick Start**
-- **1) Install dependencies:**
+## What the project does
+
+- Reads `Data/Birthday_Wish_Template.txt` and replaces `{name}` and `[Your Name]` with real values.
+- Builds a high-quality HTML birthday email using `build_html.py`.
+- Sends the message through SMTP with `send.py`.
+
+## How to run
+
+1. Install the required dependency:
 
 ```bash
 pip install python-dotenv
 ```
 
-- **2) Add credentials:** Create a `.env` file in the project root with your sending address and password (use an App Password for Gmail):
+2. Add your email credentials in a `.env` file in the project root:
 
 ```text
 my_email=you@example.com
 my_password=your_app_password
 ```
 
-- **3) Edit the message:** Customize `Data/Birthday_Wish_Template.txt` to change wording and placeholders.
-
-- **4) Run the example:**
+3. Run the example application:
 
 ```bash
 python app.py
 ```
 
-Note: `app.py` builds the message for `Teejay` and then calls the sender function. Modify `app.py` or call `build_birthday_email()` directly to preview without sending.
+## Preview without sending
 
-**Preview HTML (optional)**
-- To preview the generated HTML locally without sending, run a short Python snippet to write output to `preview.html` and open it in your browser.
+If you want to see the HTML before sending, generate a preview file and open it in your browser.
 
 ```bash
 python - <<'PY'
@@ -44,25 +45,16 @@ from build_html import build_birthday_email
 from utils import read_file, modify
 content = modify(read_file('Data/Birthday_Wish_Template.txt'), 'Teejay', 'Taofeek')
 html = build_birthday_email(name='Teejay', body_text=content, sender_name='Taofeek')
-open('preview.html','w',encoding='utf-8').write(html)
-print('Wrote preview.html')
+open('preview.html','w', encoding='utf-8').write(html)
+print('preview.html created')
 PY
 ```
 
-**Files You Care About**
-- **`app.py`**: Example runner that builds and sends the email ([app.py](app.py)).
-- **`build_html.py`**: Produces the HTML email body ([build_html.py](build_html.py)).
-- **`send.py`**: Sends email via SMTP ([send.py](send.py)).
-- **`utils.py`**: Helpers to read/modify the template and load `.env` ([utils.py](utils.py)).
-- **`Data/Birthday_Wish_Template.txt`**: The message template used for personalization ([Data/Birthday_Wish_Template.txt](Data/Birthday_Wish_Template.txt)).
+## Key files
 
-**Security & Notes**
-- **Use App Passwords:** For Gmail, create an App Password rather than using your main account password.
-- **Do not commit secrets:** Add `.env` to `.gitignore` and never commit real credentials.
-- **Compatibility:** The generated HTML is simple and compatible with most email clients; test in your target clients before wide sending.
-
-**Next Steps / Customization Ideas**
-- Swap templates per occasion or support CSV-based personalization using `Data/products.csv` as inspiration for data-driven messages.
-- Add an option to save outbound HTML files rather than sending immediately for preview workflows.
-
-If you want, I can open `preview.html` for you, add a small preview command to `app.py`, or create a `requirements.txt` to pin dependencies.
+- `app.py` — entry point that builds and sends the email.
+- `build_html.py` — creates the HTML email body.
+- `send.py` — sends the email via SMTP.
+- `utils.py` — reads the template and applies placeholder replacement.
+- `Data/Birthday_Wish_Template.txt` — source template for the birthday message.
+- `image.png` — the rendered output image of the project.
